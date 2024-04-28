@@ -1,0 +1,1 @@
+find_kth_elem_alg2(int* arr1, int s1, int* arr2, int s2, int k)
