@@ -138,7 +138,7 @@ int find_kth_elem_alg2(int* arr1, int s1, int* arr2, int s2, int k){
             low = cut1 + 1; 
         }
     }
-
+    return arr2[k - 1];
 }
 
 void scanArr(int* arr, int size){
