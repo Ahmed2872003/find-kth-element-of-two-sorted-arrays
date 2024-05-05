@@ -68,59 +68,57 @@
 
 **Pseudo code:**
 
-> **find_kth_elem_alg2(arr1, s1, arr2, s2, k)**
+> **find_kth_elem_alg2(arr1, s1, arr2, s2, k){**
 >
-> {
+> **if(s1 \> s2) {**
 >
-> if (s1 \> s2) {
+> **return find_kth_elem_alg2(arr2, s2, arr1, s1, k);**
 >
-> // reversing the parameters
+> **}**
 >
-> return find_kth_elem_alg2(arr2, s2, arr1, s1, k)
+> **if(!s1 && s2) return arr2\[k - 1\];**
 >
-> }
+> **low = max(0,k-s2-1), high = min(k,s1);**
 >
-> if (!s1 && s2) return arr2\[k - 1\];
+> **return find_kth_elem_alg2_src(arr1, s1, arr2, s2, k, low, high);**
 >
-> low = max(0,k-s2-1), high = min(k,s1)
+> **}**
 >
-> while(low \<= high) {
+> **find_kth_elem_alg2_src(arr1, s1, arr2, s2, k, l, h){**
 >
-> cut1 = (low + high) / 2
+> **if(l \<= h){**
 >
-> cut2 = k - cut1 - 2
+> **cut1 = (l + h) / 2;**
 >
-> l1 = arr1\[cut1\]
+> **cut2 = k - cut1 - 2;**
 >
-> l2 = cut2 \>= 0 ? arr2\[cut2\] : INT_MIN
+> **l1 = arr1\[cut1\];**
 >
-> r1 = cut1 + 1 \< s1 ? arr1\[cut1 + 1\] : INT_MAX
+> **l2 = cut2 \>= 0 ? arr2\[cut2\] : INT_MIN;**
 >
-> r2 = cut2 + 1 \< s2 ? arr2\[cut2 + 1\] : INT_MAX
+> **r1 = cut1 + 1 \< s1 ? arr1\[cut1 + 1\] : INT_MAX;**
 >
-> if(l1 \<= r2 && l2 \<= r1) {
+> **r2 = cut2 + 1 \< s2 ? arr2\[cut2 + 1\] : INT_MAX;**
 >
-> return max(l1, l2)
+> **if(l1 \<= r2 && l2 \<= r1) {**
 >
-> }
+> **return max(l1, l2);**
 >
-> else if (l1 \> r2) {
+> **}**
 >
-> high = cut1 - 1
+> **else if (l1 \> r2)**
 >
-> }
+> **return find_kth_elem_alg2_src(arr1, s1, arr2, s2, k, l, cut1 - 1);**
 >
-> else {
+> **else**
 >
-> low = cut1 + 1
+> **return find_kth_elem_alg2_src(arr1, s1, arr2, s2, k, cut1 + 1, h);**
 >
-> }
+> **}**
 >
-> }
+> **return arr2\[k - 1\];**
 >
-> return arr2\[k - 1\]
->
-> }
+> **}**
 >
 > **Time complexity:** The time complexity the algorithm is **O (log
 > (min (s1, s2)))**
@@ -137,15 +135,13 @@
 <col style="width: 29%" />
 <col style="width: 42%" />
 </colgroup>
-<thead>
-<tr class="header">
-<th></th>
-<th><strong>Algorithm 1</strong></th>
-<th><strong>Algorithm 2</strong></th>
-</tr>
-</thead>
 <tbody>
 <tr class="odd">
+<td></td>
+<td><strong>Algorithm 1</strong></td>
+<td><strong>Algorithm 2</strong></td>
+</tr>
+<tr class="even">
 <td><strong>Time complexity</strong></td>
 <td><p>Best---------|</p>
 <p>Average -- O<strong>(n)</strong></p>
@@ -154,7 +150,7 @@
 <p>Average --- <strong>O (log (min (s1, s2)))</strong></p>
 <p>Worst ---------|</p></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><strong>Space complexity</strong></td>
 <td><strong>O (s1 + s2)</strong></td>
 <td><strong>O (1)</strong></td>
