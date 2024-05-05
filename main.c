@@ -11,6 +11,8 @@ void merge(int*, int, int*, int, int*);
 int find_kth_elem_alg1(int*, int, int*,int, int);
 // Algorithm 2
 int find_kth_elem_alg2(int*, int, int*, int, int);
+int find_kth_elem_alg2_src(int*, int, int*, int, int, int , int);
+
 
 
 int main(){
@@ -120,23 +122,28 @@ int find_kth_elem_alg2(int* arr1, int s1, int* arr2, int s2, int k){
 
     int low = fmax(0,k-s2-1), high = fmin(k,s1);
 
-    while(low <= high) {
-        int cut1 = (low + high) / 2;
+    return find_kth_elem_alg2_src(arr1, s1, arr2, s2, k, low, high);
+}
+
+int find_kth_elem_alg2_src(int* arr1, int s1, int* arr2, int s2, int k, int l, int h){
+
+    if(l <= h){
+
+        int cut1 = (l + h) / 2;
         int cut2 = k - cut1 - 2;
         int l1 = arr1[cut1];
         int l2 = cut2 >= 0 ? arr2[cut2] : INT_MIN;
         int r1 = cut1 + 1 < s1 ? arr1[cut1 + 1] : INT_MAX;
         int r2 = cut2 + 1 < s2 ? arr2[cut2 + 1] : INT_MAX;
-            
+
         if(l1 <= r2 && l2 <= r1) {
             return fmax(l1, l2);
         }
-        else if (l1 > r2) {
-            high = cut1 - 1;
-        }
-        else {
-            low = cut1 + 1; 
-        }
+        else if (l1 > r2) 
+            return find_kth_elem_alg2_src(arr1, s1, arr2, s2, k, l, cut1 - 1);
+        else 
+            return find_kth_elem_alg2_src(arr1, s1, arr2, s2, k, cut1 + 1, h);
+
     }
     return arr2[k - 1];
 }
